@@ -1,46 +1,47 @@
 const {Sequelize, DataTypes, Model} = require('sequelize');
 
-const sequelize = new Sequelize('GDA00411_OT_herlin_gomez', 'root', 'h3721n@fernando.GE', {
-    host: 'localhost',
-    dialect: 'mysql',
-    port: 3306
-});
+const sequelize = require('../db/mysql');
 
-class categoriaProducto extends Model {}
+class CategoriaProducto extends Model {}
 
-categoriaProducto.init({
-    idCategoriaProductos: {
+CategoriaProducto.init({
+    id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
+        field: 'idCategoriaProductos'
     },
-    usuarios_idusuarios: {
+    idUsuario: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'usuario',
-            key: 'idusuario'
+            key: 'usuarios_idusuarios'
         },
+        field: 'Usuarios_idUsuarios',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     },
     nombre: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        field: 'nombre'
     },
-    estados_idestados: {
+    idEstado: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'Estados',
             key: 'idestados'
         },
+        field: 'Estados_idEstados',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     },
-    fecha_creacion: {
+    fechaCreacion: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
+        field: 'fecha_creacion',
     },
 },{
     sequelize,
@@ -49,4 +50,4 @@ categoriaProducto.init({
     timestamps: false
 });
 
-module.exports = categoriaProducto;
+module.exports = CategoriaProducto;
