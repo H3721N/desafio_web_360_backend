@@ -3,6 +3,6 @@ const { postProducto, updateProducto } = require('./producto.controller');
 
 router.post('/producto', postProducto);
 
-router.put('/producto/:idProductos', updateProducto);
+router.put('/producto/:id', updateProducto);
 
 module.exports = router;

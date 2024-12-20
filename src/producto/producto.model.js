@@ -1,36 +1,35 @@
-const {Sequelize, DataTypes, Model} = require('sequelize');
+const {DataTypes, Model} = require('sequelize');
 
-const sequelize = new Sequelize('GDA00411_OT_herlin_gomez', 'root', 'h3721n@fernando.GE', {
-    host: 'localhost',
-    dialect: 'mysql',
-    port: 3306
-});
+const sequelize = require('../db/mysql');
 
-class producto extends Model {}
+class Producto extends Model {}
 
-producto.init({
-   idProductos: {
+Producto.init({
+   id: {
        type: DataTypes.INTEGER,
        autoIncrement: true,
-       primaryKey: true
+       primaryKey: true,
+       field: 'idProductos'
    },
-    CategoriasProductos_idCategoriaProductos: {
+    idCategoria: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'CategoriasProductos',
             key: 'idCategoriaProductos'
         },
+        field: 'CategoriasProductos_idCategoriaProductos',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     },
-    usuarios_idusuarios: {
+    idUsuario: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'usuarios',
             key: 'idusuarios'
         },
+        field: 'usuarios_idusuarios',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     },
@@ -50,13 +49,14 @@ producto.init({
         type: DataTypes.FLOAT,
         allowNull: false
     },
-    estados_idestados: {
+    idEstado: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'Estados',
             key: 'idestados'
         },
+        field: 'estados_idestados',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     },
@@ -64,9 +64,10 @@ producto.init({
         type: DataTypes.FLOAT,
         allowNull: false
     },
-    fecha_creacion: {
+    fechaCreacion: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
+        field: 'fecha_creacion'
     },
     foto: {
         type: DataTypes.BLOB,
@@ -79,4 +80,4 @@ producto.init({
     timestamps: false
 });
 
-module.exports = producto;
+module.exports = Producto;
