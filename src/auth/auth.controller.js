@@ -8,7 +8,7 @@ const loginCtrl = async (req, res) => {
     try {
         const dataLogin = req.body;
 
-        const user = await Usuario.findOne({where: {correo_electronico: dataLogin.correo_electronico}});
+        const user = await Usuario.findOne({where: {email: dataLogin.email}});
         console.log(' user = ', user);
 
         if (!user){
@@ -20,12 +20,12 @@ const loginCtrl = async (req, res) => {
             return res.status(401).json({ error: 'contraseña incorrecta' });
         }
 
-        //const tokenSession = await tokenSign(user);
+        const tokenSession = await tokenSign(user);
 
         return res.status(200).json({
             message: 'inicio de sesión exitoso',
             data: user,
-            //token: tokenSession,
+            token: tokenSession,
         });
 
     }catch(error){
