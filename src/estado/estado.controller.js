@@ -17,13 +17,13 @@ const getEstados = async (req, res) => {
 };
 
 const getEstadoById = async (req, res) => {
-    const id = req.params.idestados;
+    const id = req.params.id;
     console.log('buscando el id: ', id);
 
     try {
         const estado = await Estado.findOne({
             where: {
-                idestados: id,
+                id: id,
             },
         });
 
@@ -53,6 +53,7 @@ const getEstadoById = async (req, res) => {
 
 const createEstado = async (req, res) => {
     const dataEstados = req.body;
+try {
     await Estado.sync();
     const createEstado = await Estado.create({
         nombre: dataEstados.nombre,
@@ -63,10 +64,19 @@ const createEstado = async (req, res) => {
         message: 'Estado creado con exito',
         data: createEstado,
     });
+} catch (error) {
+    console.error(error);
+    res.status(500).json({
+        ok: false,
+        status: 500,
+        message: 'Error interno del servidor',
+    });
+}
 };
 
 const updateEstado = async (req, res) => {
-    const id = req.params.idestados;
+    try {
+    const id = req.params.id;
 
     console.log('buscando el id: ', id);
     const dataEstados = req.body;
@@ -75,7 +85,7 @@ const updateEstado = async (req, res) => {
             nombre: dataEstados.nombre,
         },
         {
-            where: { idestados: id },
+            where: { id: id },
         });
     if (updateEstado === 0) {
         return res.status(404).json({
@@ -85,7 +95,7 @@ const updateEstado = async (req, res) => {
         });
     }
     const estadoActualizado = await Estado.findOne({
-        where: { idestados: id },
+        where: { id: id },
     });
 
     res.status(200).json({
@@ -94,13 +104,21 @@ const updateEstado = async (req, res) => {
         message: 'Estado actualizado con exito',
         body: estadoActualizado
     });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            ok: false,
+            status: 500,
+            message: 'Error interno del servidor',
+        });
+    }
 };
 
 const deleteEstado = async (req, res) => {
-    const id = req.params.idestados;
+    const id = req.params.id;
     const deleteEstado = await Estado.destroy({
         where: {
-            idestados: id,
+            id: id,
         },
     });
     if (deleteEstado === 0) {

@@ -10,12 +10,12 @@ const {where} = require("sequelize");
 
 router.get('/estado', getEstados);
 
-router.get('/estado/:idestados', getEstadoById);
+router.get('/estado/:id', getEstadoById);
 
 router.post('/estado', createEstado);
 
-router.put('/estado/:idestados', updateEstado);
+router.put('/estado/:id', updateEstado);
 
-router.delete('/estado/:idestados', deleteEstado);
+router.delete('/estado/:id', deleteEstado);
 
 module.exports = router;
