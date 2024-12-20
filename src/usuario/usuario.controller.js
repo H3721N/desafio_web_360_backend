@@ -10,15 +10,15 @@ const postUsuario = async (req, res) => {
         console.log('passwordHash = ', passwordHash);
 
         const createUsuario = await Usuario.create({
-            rol_idrol: dateUsuario.rol_idrol,
-            estados_idestados: dateUsuario.estados_idestados,
-            correo_electronico: dateUsuario.correo_electronico,
-            nombre_completo: dateUsuario.nombre_completo,
+            idRol: dateUsuario.idRol,
+            idEstado: dateUsuario.idEstado,
+            email: dateUsuario.email,
+            nombre: dateUsuario.nombre,
             password: passwordHash,
             telefono: dateUsuario.telefono,
-            fecha_nacimiento: dateUsuario.fecha_nacimiento,
-            fecha_creacion: fecha_creacion,
-            Clientes_idClientes: dateUsuario.Clientes_idClientes,
+            fechaNacimiento: dateUsuario.fechaNacimiento,
+            creacionCuenta: fecha_creacion,
+            idCliente: dateUsuario.idCliente,
         });
         res.status(200).json({
             ok: true,
@@ -29,8 +29,6 @@ const postUsuario = async (req, res) => {
     } catch (error) {
         console.error('Error al crear el usuario:', error);
         res.status(500).json({
-            ok: false,
-            status: 500,
             message: 'Error al crear el usuario',
             error: error.message,
         });
@@ -38,22 +36,24 @@ const postUsuario = async (req, res) => {
 }
 
 const updateUsuario = async (req, res) => {
-    const id = req.params.idusuarios;
-    const dataUsuario = req.body;
+    const id = req.params.id;
+    const dateUsuario = req.body;
+    const passwordHash = await encrypt(dateUsuario.password);
 
     console.log('id = ', id);
 
     const updateUsuario = await Usuario.update({
-        rol_idrol: dataUsuario.rol_idrol,
-        estados_idestados: dataUsuario.estados_idestados,
-        correo_electronico: dataUsuario.correo_electronico,
-        nombre_completo: dataUsuario.nombre_completo,
-        password: dataUsuario.password,
-        telefono: dataUsuario.telefono,
-        fecha_nacimiento: dataUsuario.fecha_nacimiento,
-        fecha_creacion: dataUsuario.fecha_creacion,
+        idRol: dateUsuario.idRol,
+        idEstado: dateUsuario.idEstado,
+        email: dateUsuario.email,
+        nombre: dateUsuario.nombre,
+        password: passwordHash,
+        telefono: dateUsuario.telefono,
+        fechaNacimiento: dateUsuario.fechaNacimiento,
+        creacionCuenta: dateUsuario.creacionCuenta,
+        idCliente: dateUsuario.idCliente,
     }, {
-        where: { idusuarios: id }
+        where: { id: id }
     });
 
     if(updateUsuario === 0){
@@ -65,12 +65,10 @@ const updateUsuario = async (req, res) => {
     }
 
     const usuarioActualizado = await Usuario.findOne({
-        where: { idusuarios: id },
+        where: { id: id },
     });
 
     res.status(200).json({
-        ok: true,
-        status: 200,
         message: 'Usuario actualizado con exito',
         data: usuarioActualizado,
     });

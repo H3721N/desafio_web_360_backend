@@ -1,69 +1,75 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 
-const sequelize = new Sequelize('GDA00411_OT_herlin_gomez', 'root', 'h3721n@fernando.GE', {
-    host: 'localhost',
-    dialect: 'mysql',
-    port: 3306
-})
+const sequelize = require('../db/mysql');
 
-class usuario extends Model {}
+class Usuario extends Model {}
 
-usuario.init({
-    idusuarios: {
+Usuario.init({
+    id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
+        field: 'idusuarios'
     },
-    rol_idrol: {
+    idRol: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'Rol',
             key: 'idrol'
         },
+        field: 'rol_idrol',
     },
-    estados_idestados: {
+    idEstado: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'Estados',
             key: 'idestados'
         },
+        field: 'estados_idestados',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     },
-    correo_electronico: {
+    email: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        field: 'correo_electronico'
     },
-    nombre_completo: {
+    nombre: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        field: 'nombre_completo'
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        field: 'password'
     },
     telefono: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        password: 'telefono'
     },
-    fecha_nacimiento: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    fecha_creacion: {
+    fechaNacimiento: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: Sequelize.NOW
+        field: 'fecha_nacimiento'
     },
-    Clientes_idClientes: {
+    creacionCuenta: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
+        field: 'fecha_creacion'
+    },
+    idCliente: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'Clientes',
             key: 'idcliente'
         },
+        field: 'Clientes_idClientes',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     }
@@ -76,4 +82,4 @@ usuario.init({
     timestamps: false,
 });
 
-module.exports = usuario;
+module.exports = Usuario;

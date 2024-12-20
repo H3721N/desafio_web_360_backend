@@ -4,6 +4,6 @@ const { postUsuario,
 
 router.post('/usuario', postUsuario);
 
-router.put('/usuario/:idusuarios', updateUsuario);
+router.put('/usuario/:id', updateUsuario);
 
 module.exports = router;
