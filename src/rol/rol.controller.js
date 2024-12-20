@@ -65,36 +65,36 @@ const createRol = async (req, res) => {
 }
 
 const updateRol = async (req, res) => {
-    const id = req.params.idrol;
+    try {
+        const id = req.params.id;
+        console.log('buscando el id: ', id);
+        const dataRoles = req.body;
 
-    console.log('buscando el id: ', id);
-
-    const dataRoles = req.body;
-
-    const updateRol = await Rol.update({
-        nombre: dataRoles.nombre,
-    },{
-        where: { idrol: id },
-    });
-
-    if (updateRol[0] === 0) {
-        return res.status(404).json({
-            ok: false,
-            status: 404,
-            message: 'no se encontró el rol con el id proporcionado',
+        const updateRol = await Rol.update({
+            nombre: dataRoles.nombre,
+        },{
+            where: { id: id },
         });
-    };
 
-    const rolActualizado = await Rol.findOne({
-        where: { idrol: id },
-    });
+        if (updateRol[0] === 0) {
+            return res.status(404).json({
+                message: 'no se encontró el rol con el id proporcionado',
+            });
+        };
+        const rolActualizado = await Rol.findOne({
+            where: { id: id },
+        });
 
-    res.status(200).json({
-        ok: true,
-        status: 200,
-        message: 'Rol actualizado con éxito',
-        body: rolActualizado
-    })
+        res.status(200).json({
+            message: 'Rol actualizado con éxito',
+            body: rolActualizado
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: 'error interno del servidor',
+        });
+    }
 
 }
 

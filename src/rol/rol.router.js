@@ -7,11 +7,11 @@ const {where} = require("sequelize");
 
 router.get('/rol', getRoles);
 
-router.get('/rol/:idrol', getRolById);
+router.get('/rol/:id', getRolById);
 
 router.post('/rol', createRol);
 
-router.put('/rol/:idrol', updateRol);
+router.put('/rol/:id', updateRol);
 
 
 module.exports = router;
