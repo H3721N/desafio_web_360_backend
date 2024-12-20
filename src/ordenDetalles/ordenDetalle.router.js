@@ -3,6 +3,6 @@ const { postOrdenDetalle, putOrdenDetalle } = require('./ordenDetalle.controller
 
 router.post('/ordenDetalle', postOrdenDetalle);
 
-router.put('/ordenDetalle/:idOrdenDetalles', putOrdenDetalle);
+router.put('/ordenDetalle/:id', putOrdenDetalle);
 
 module.exports = router;

@@ -1,34 +1,33 @@
 const {Sequelize, DataTypes, Model} = require('sequelize');
 
-const sequelize = new Sequelize('GDA00411_OT_herlin_gomez', 'root', 'h3721n@fernando.GE', {
-    host: 'localhost',
-    dialect: 'mysql',
-    port: 3306
-});
+const sequelize = require('../db/mysql');
 
 class ordenDetalles extends Model {}
 
 ordenDetalles.init({
-    idOrdenDetalles: {
+    id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
+        field: 'idOrdenDetalles'
     },
-    Orden_idOrden: {
+    idOrden: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'Orden',
             key: 'idOrden'
         },
+        field: 'Orden_idOrden'
     },
-    Productos_idProductos: {
+    idProducto: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'Productos',
             key: 'idProductos'
         },
+        field: 'Productos_idProductos'
     },
     cantidad: {
         type: DataTypes.INTEGER,
