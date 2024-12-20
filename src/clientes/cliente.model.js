@@ -1,38 +1,40 @@
 const {Sequelize, DataTypes, Model} = require('sequelize');
 
-const sequelize = new Sequelize('GDA00411_OT_herlin_gomez', 'root', 'h3721n@fernando.GE', {
-    host: 'localhost',
-    dialect: 'mysql',
-    port: 3306
-});
+const sequelize = require('../db/mysql');
 
-class cliente extends Model {}
+class Cliente extends Model {}
 
-cliente.init({
-    idcliente: {
+Cliente.init({
+    id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
+        field: 'idcliente'
     },
-    razon_social: {
+    razonSocial: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        field: 'razon_social'
     },
-    nombre_comercial: {
+    nombreComercial: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        field: 'nombre_comercial'
     },
-    direccion_entrega: {
+    direccionEntrega: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        field: 'direccion_entrega'
     },
     telefono: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        field: 'telefono'
     },
     email: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        field: 'email'
     },
 },{
     sequelize,
@@ -52,4 +54,4 @@ async function testConnection() {
 
 testConnection();
 
-module.exports = cliente;
+module.exports = Cliente;
