@@ -8,7 +8,7 @@ const postUsuario = async (req, res) => {
         const existingUser = await Usuario.findOne({ where: { email: dateUsuario.email } });
         if (existingUser) {
             return res.status(400).json({
-                message: 'el email ya esta vinculado a otro usuario',
+                message: 'el correo ya esta vinculado a otro usuario',
             });
         }
         const passwordHash = await encrypt(dateUsuario.password);

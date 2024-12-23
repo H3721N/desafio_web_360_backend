@@ -7,7 +7,7 @@ const postCliente = async (req, res) => {
     const existingCliente = await Cliente.findOne({ where: { email: dataCliente.email } });
     if (existingCliente) {
         return res.status(400).json({
-            message: 'El email ya está en uso',
+            message: 'El correo ya esta vinculado a otro cliente',
         });
     }
 
