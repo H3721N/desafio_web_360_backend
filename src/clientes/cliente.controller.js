@@ -3,6 +3,14 @@ const Cliente = require('./cliente.model');
 const postCliente = async (req, res) => {
     try {
     const dataCliente = req.body;
+
+    const existingCliente = await Cliente.findOne({ where: { email: dataCliente.email } });
+    if (existingCliente) {
+        return res.status(400).json({
+            message: 'El email ya está en uso',
+        });
+    }
+
     const createCliente = await Cliente.create({
         razonSocial: dataCliente.razonSocial,
         nombreComercial: dataCliente.nombreComercial,
@@ -14,12 +22,12 @@ const postCliente = async (req, res) => {
         message: 'Cliente creado de manera exitosa',
         data: createCliente,
     });
-} catch (error) {
-    res.status(500).json({
-        message: 'Error al crear el cliente',
-        error: error.message,
-    });
-}
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al crear el cliente',
+            error: error.message,
+        });
+    }
 };
 
 const updateCliente = async (req, res) => {
@@ -32,7 +40,6 @@ const updateCliente = async (req, res) => {
         nombreComercial: dataCliente.nombreComercial,
         direccionEntrega: dataCliente.direccionEntrega,
         telefono: dataCliente.telefono,
-        email: dataCliente.email,
     }, {
         where: { id: id },
 
