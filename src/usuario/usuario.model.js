@@ -49,7 +49,7 @@ Usuario.init({
     telefono: {
         type: DataTypes.STRING,
         allowNull: false,
-        password: 'telefono'
+        field: 'telefono'
     },
     fechaNacimiento: {
         type: DataTypes.DATE,
@@ -68,6 +68,7 @@ Usuario.init({
         references: {
             model: 'Clientes',
             key: 'idcliente'
+
         },
         field: 'Clientes_idClientes',
         onUpdate: 'CASCADE',
