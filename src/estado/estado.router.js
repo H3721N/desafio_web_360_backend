@@ -7,14 +7,25 @@ const { getEstados,
         deleteEstado } = require('./estado.controller');
 const Estado = require('./estado.model');
 const {where} = require("sequelize");
+const {checkToken} = require("../middleware/checkToken");
+const {validateEstados} = require("../validators/validators");
+const {checkRoleAuth} = require("../middleware/checkRoleAuth");
 
 router.get('/estado', getEstados);
 
 router.get('/estado/:id', getEstadoById);
 
-router.post('/estado', createEstado);
+router.post('/estado',
+    checkToken,
+    validateEstados,
+    checkRoleAuth(['Admin']),
+    createEstado);
 
-router.put('/estado/:id', updateEstado);
+router.put('/estado/:id',
+    checkToken,
+    validateEstados,
+    checkRoleAuth(['Admin']),
+    updateEstado);
 
 router.delete('/estado/:id', deleteEstado);
 

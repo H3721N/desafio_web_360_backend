@@ -59,8 +59,6 @@ try {
         nombre: dataEstados.nombre,
     });
     res.status(200).json({
-        ok: true,
-        status: 201,
         message: 'Estado creado con exito',
         data: createEstado,
     });
