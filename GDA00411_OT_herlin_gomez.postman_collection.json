@@ -1,0 +1,731 @@
+{
+	"info": {
+		"_postman_id": "e99696f7-43e0-49e4-adaf-642fb3a90d07",
+		"name": "GDA00411_OT_herlin_gomez",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35302776"
+	},
+	"item": [
+		{
+			"name": "estado",
+			"item": [
+				{
+					"name": "estadoPost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiaGdvbWV6QG91dGxvb2suY29tIiwidXNlclJvbCI6IkFkbWluIiwiaWF0IjoxNzM0ODk0MzcxLCJleHAiOjE3MzQ5ODA3NzF9.2_DZhE8dgt-aO5kHuKyKn_-q5CMuXrW4ymIPo0uCHHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Comprador\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/estado",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"estado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEstado",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3307/api/v1/estado",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3307",
+							"path": [
+								"api",
+								"v1",
+								"estado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEstadoById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3307/api/v1/estado/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3307",
+							"path": [
+								"api",
+								"v1",
+								"estado",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putEstado",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiaGdvbWV6QG91dGxvb2suY29tIiwidXNlclJvbCI6IkFkbWluIiwiaWF0IjoxNzM0ODk0MzcxLCJleHAiOjE3MzQ5ODA3NzF9.2_DZhE8dgt-aO5kHuKyKn_-q5CMuXrW4ymIPo0uCHHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"Agotado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/estado/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"estado",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteEstado",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3307/api/v1/estado/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3307",
+							"path": [
+								"api",
+								"v1",
+								"estado",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "rol",
+			"item": [
+				{
+					"name": "rolPost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiaGdvbWV6QG91dGxvb2suY29tIiwidXNlclJvbCI6IkFkbWluIiwiaWF0IjoxNzM0ODk0MzcxLCJleHAiOjE3MzQ5ODA3NzF9.2_DZhE8dgt-aO5kHuKyKn_-q5CMuXrW4ymIPo0uCHHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Gerente\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/rol",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"rol"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rolUpdate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiaGdvbWV6QG91dGxvb2suY29tIiwidXNlclJvbCI6IkFkbWluIiwiaWF0IjoxNzM0ODk0MzcxLCJleHAiOjE3MzQ5ODA3NzF9.2_DZhE8dgt-aO5kHuKyKn_-q5CMuXrW4ymIPo0uCHHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"Admin2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/rol/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"rol",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cliente",
+			"item": [
+				{
+					"name": "clientePost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiaGdvbWV6QG91dGxvb2suY29tIiwidXNlclJvbCI6IkFkbWluIiwiaWF0IjoxNzM0ODk0MzcxLCJleHAiOjE3MzQ5ODA3NzF9.2_DZhE8dgt-aO5kHuKyKn_-q5CMuXrW4ymIPo0uCHHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"razonSocial\": \"Empresa Duolingo S.A.\",\r\n  \"nombreComercial\": \"XYZ Ninja Store\",\r\n  \"direccionEntrega\": \"Calle Garcia 123, Zona 1\",\r\n  \"telefono\": \"1234567890\",\r\n  \"email\": \"duolingo@edu.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/cliente",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ClienteUpdate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiaGdvbWV6QG91dGxvb2suY29tIiwidXNlclJvbCI6IkFkbWluIiwiaWF0IjoxNzM0ODk0MzcxLCJleHAiOjE3MzQ5ODA3NzF9.2_DZhE8dgt-aO5kHuKyKn_-q5CMuXrW4ymIPo0uCHHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"razonSocial\": \"Empresa ABC S.A.\",\r\n  \"nombreComercial\": \"ABC Store\",\r\n  \"direccionEntrega\": \"Avenida Ficticia 456, Zona 2\",\r\n  \"telefono\": \"50237326926\",\r\n  \"email\": \"duolingo@edu.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/cliente/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"cliente",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "usuario",
+			"item": [
+				{
+					"name": "usuarioPost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiaGdvbWV6QG91dGxvb2suY29tIiwidXNlclJvbCI6IkFkbWluIiwiaWF0IjoxNzM0ODk0MzcxLCJleHAiOjE3MzQ5ODA3NzF9.2_DZhE8dgt-aO5kHuKyKn_-q5CMuXrW4ymIPo0uCHHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idRol\": 1,\r\n  \"idEstado\": 12,\r\n  \"email\": \"gomez@gmail.com\",\r\n  \"nombre\": \"Herlin Fernando\",\r\n  \"password\": \"123456\",\r\n  \"telefono\": \"37326926\",\r\n  \"fechaNacimiento\": \"1990-05-20\",\r\n  //\"fecha_creacion\": \"2024-12-15 12:00:00\",\r\n  \"idCliente\": 2\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "usuarioUpdate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiaGdvbWV6QG91dGxvb2suY29tIiwidXNlclJvbCI6IkFkbWluIiwiaWF0IjoxNzM0ODk0MzcxLCJleHAiOjE3MzQ5ODA3NzF9.2_DZhE8dgt-aO5kHuKyKn_-q5CMuXrW4ymIPo0uCHHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idRol\": 1,  \r\n  \"idEstado\": 3, \r\n  //\"email\": \"sgomez@gmail.com\",\r\n  \"nombre\": \"Bart Berne Actualizado\",\r\n  \"password\": \"nueva_contraseña_segura\",\r\n  \"telefono\": \"9876543210\",\r\n  \"fechaNacimiento\": \"1990-05-20\",\r\n  \"creacionCuenta\": \"2024-12-15 12:00:00\",\r\n  \"idCliente\": 2 \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/usuario/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"usuario",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "categoria_producto",
+			"item": [
+				{
+					"name": "categoriaPost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiaGdvbWV6QG91dGxvb2suY29tIiwidXNlclJvbCI6IkFkbWluIiwiaWF0IjoxNzM0ODk0MzcxLCJleHAiOjE3MzQ5ODA3NzF9.2_DZhE8dgt-aO5kHuKyKn_-q5CMuXrW4ymIPo0uCHHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idUsuario\": 1,\r\n    \"nombre\": \"Electrónica IV\",\r\n    \"idEstado\": 1,\r\n    \"fechaCreacion\": \"2024-12-15 18:00:00\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/categoriaProducto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"categoriaProducto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "categoriUptdate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiaGdvbWV6QG91dGxvb2suY29tIiwidXNlclJvbCI6IkFkbWluIiwiaWF0IjoxNzM0ODk0MzcxLCJleHAiOjE3MzQ5ODA3NzF9.2_DZhE8dgt-aO5kHuKyKn_-q5CMuXrW4ymIPo0uCHHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idUsuario\": 1,\r\n    \"nombre\": \"Informatica\",\r\n    \"idEstado\": 2,\r\n    \"fechaCreacion\": \"2024-12-17 20:00:00\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/categoriaProducto/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"categoriaProducto",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "producto",
+			"item": [
+				{
+					"name": "productoPost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiaGdvbWV6QG91dGxvb2suY29tIiwidXNlclJvbCI6IkFkbWluIiwiaWF0IjoxNzM0ODk0MzcxLCJleHAiOjE3MzQ5ODA3NzF9.2_DZhE8dgt-aO5kHuKyKn_-q5CMuXrW4ymIPo0uCHHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idCategoria\": 1,\r\n  \"idUsuario\": 1,\r\n  \"nombre\": \"Celular Redmi Note 6\",\r\n  \"marca\": \"Xiaomi\",\r\n  \"codigo\": \"D12345\",\r\n  \"stock\": 50.888,\r\n  \"idEstado\": 1,\r\n  \"precios\": 1500.99,\r\n  \"fechaCreacion\": \"2024-12-16T10:30:00\",\r\n  \"foto\": \"base64_encoded_image_data\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/producto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"producto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "productoUpdate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiaGdvbWV6QG91dGxvb2suY29tIiwidXNlclJvbCI6IkFkbWluIiwiaWF0IjoxNzM0ODk0MzcxLCJleHAiOjE3MzQ5ODA3NzF9.2_DZhE8dgt-aO5kHuKyKn_-q5CMuXrW4ymIPo0uCHHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idCategoria\": 1,\r\n  \"idUsuario\": 2,\r\n  \"nombre\": \"Laptop Gaming Red Magic\",\r\n  \"marca\": \"Dell\",\r\n  \"codigo\": \"D12345-G\",\r\n  \"stock\": 45.0,\r\n  \"idEstado\": 1,\r\n  \"precios\": 1800.99,\r\n  \"fechaCreacion\": \"2024-12-16T10:30:00\",\r\n  \"foto\": \"base64_encoded_image_data\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/producto/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"producto",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ordenProducto",
+			"item": [
+				{
+					"name": "ordenDetallePost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiaGdvbWV6QG91dGxvb2suY29tIiwidXNlclJvbCI6IkFkbWluIiwiaWF0IjoxNzM0ODk0MzcxLCJleHAiOjE3MzQ5ODA3NzF9.2_DZhE8dgt-aO5kHuKyKn_-q5CMuXrW4ymIPo0uCHHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idOrden\": 1,\r\n  \"idProducto\": 2,\r\n  \"cantidad\": 20,\r\n  \"precio\": 100.50,\r\n  \"subtotal\": 502.50\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/ordenDetalle",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"ordenDetalle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateOrdenDetalle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiaGdvbWV6QG91dGxvb2suY29tIiwidXNlclJvbCI6IkFkbWluIiwiaWF0IjoxNzM0ODk0MzcxLCJleHAiOjE3MzQ5ODA3NzF9.2_DZhE8dgt-aO5kHuKyKn_-q5CMuXrW4ymIPo0uCHHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idOrden\": 1,\r\n  \"idProducto\": 3,\r\n  \"cantidad\": 10,\r\n  \"precio\": 95.75,\r\n  \"subtotal\": 957.50\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/ordenDetalle/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"ordenDetalle",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"hgomez@outlook.com\",\r\n    \"password\": \"123456\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
