@@ -4,6 +4,13 @@ const { encrypt } = require('../helpers/handleBcrypt');
 const postUsuario = async (req, res) => {
     try {
         const dateUsuario = req.body;
+
+        const existingUser = await Usuario.findOne({ where: { email: dateUsuario.email } });
+        if (existingUser) {
+            return res.status(400).json({
+                message: 'el email ya esta vinculado a otro usuario',
+            });
+        }
         const passwordHash = await encrypt(dateUsuario.password);
         const fecha_creacion = new Date();
 
@@ -20,6 +27,7 @@ const postUsuario = async (req, res) => {
             creacionCuenta: fecha_creacion,
             idCliente: dateUsuario.idCliente,
         });
+
         res.status(200).json({
             ok: true,
             status: 200,
@@ -36,8 +44,10 @@ const postUsuario = async (req, res) => {
 }
 
 const updateUsuario = async (req, res) => {
+    try {
     const id = req.params.id;
     const dateUsuario = req.body;
+
     const passwordHash = await encrypt(dateUsuario.password);
 
     console.log('id = ', id);
@@ -45,7 +55,6 @@ const updateUsuario = async (req, res) => {
     const updateUsuario = await Usuario.update({
         idRol: dateUsuario.idRol,
         idEstado: dateUsuario.idEstado,
-        email: dateUsuario.email,
         nombre: dateUsuario.nombre,
         password: passwordHash,
         telefono: dateUsuario.telefono,
@@ -72,6 +81,13 @@ const updateUsuario = async (req, res) => {
         message: 'Usuario actualizado con exito',
         data: usuarioActualizado,
     });
+    } catch (error) {
+        console.error('Error al actualizar el usuario:', error);
+        res.status(500).json({
+            message: 'Error al actualizar el usuario',
+            error: error.message,
+        });
+    }
 }
 
 module.exports = {
