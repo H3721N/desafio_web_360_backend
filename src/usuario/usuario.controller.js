@@ -5,8 +5,8 @@ const postUsuario = async (req, res) => {
     try {
         const dateUsuario = req.body;
 
-        const existingUser = await Usuario.findOne({ where: { email: dateUsuario.email } });
-        if (existingUser) {
+        const existeUsuario = await Usuario.findOne({ where: { email: dateUsuario.email } });
+        if (existeUsuario) {
             return res.status(400).json({
                 message: 'el correo ya esta vinculado a otro usuario',
             });
