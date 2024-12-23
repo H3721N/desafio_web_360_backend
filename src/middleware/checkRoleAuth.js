@@ -9,25 +9,15 @@ const checkRoleAuth = (rol) => async (req, res, next) => {
         console.log('token = ', token)
         const tokenData = await verifyToken(token);
 
-        console.log(tokenData.idRol)
+        console.log(tokenData)
 
         if (!tokenData) {
             return res.status(401).send({ error: 'Invalid token' });
         }
 
-        //////////////////
-        const idRol = tokenData.idRol;
-
-        console.log('idRol = ', idRol)
-        const userRole = await role.findOne({
-            where: {
-                id: idRol,
-            }
-        });
-        console.log('userRole = ', userRole.nombre)
         console.log('rol recivido = ', rol)
 
-        if (userRole.nombre === 'Admin' || userRole.nombre === 'Administrador') {
+        if (tokenData.userRol === 'Admin' || tokenData.userRol === 'Administrador') {
             next();
         } else {
             res.status(401).send({ error: 'Este usuario no cuenta con el permiso para realizar esta accion' });
