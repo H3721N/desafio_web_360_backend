@@ -31,7 +31,7 @@ const validateClientes = [
     check('nombreComercial').exists().not().isEmpty().isString().isLength({max:345}).withMessage('El nombre no puede tener más de 45 caracteres'),
     check('direccionEntrega').exists().not().isEmpty().isString().isLength({max:45}).withMessage('La direccion no puede tener más de 45 caracteres'),
     check('telefono').exists().not().isEmpty().isString().isLength({max:45}).withMessage('El telefono no puede tener más de 45 caracteres'),
-    check('email').exists().not().isEmpty().isEmail().trim().escape().isLength({max:45}).withMessage('El email que ingreso no es valido'),
+    check('email').if((value, { req }) => req.body.email !== undefined).isEmail().isLength({ max: 50 }).withMessage('el email que ingresó no es válido'),
     (req, res, next) => {
         validateResult(req, res, next);
     }
