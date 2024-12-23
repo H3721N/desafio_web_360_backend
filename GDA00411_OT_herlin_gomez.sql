@@ -20,14 +20,14 @@ create table Clientes (
     nombre_comercial varchar(345),
     direccion_entrega varchar(45),
     telefono varchar(45),
-    email varchar(45)
+    email varchar(45) unique
 );
 
 create table Usuarios (
     idusuarios int auto_increment primary key,
     rol_idrol int,
     estados_idestados int,
-    correo_electronico varchar(50),
+    correo_electronico varchar(50) unique,
     nombre_completo varchar(75),
     password varchar(100),
     telefono varchar(45),
@@ -57,7 +57,7 @@ create table Orden (
     nombre_completo varchar(75),
     direccion varchar(545),
     telefono varchar(45),
-    correo_electronico varchar(75),
+    correo_electronico varchar(75) unique,
     fecha_entrega date,
     total_orden float,
     constraint fk_usuario_orden foreign key (usuarios_idusuarios) references Usuarios(idusuarios),
