@@ -312,7 +312,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"razonSocial\": \"Empresa ABC S.A.\",\r\n  \"nombreComercial\": \"ABC Store\",\r\n  \"direccionEntrega\": \"Avenida Ficticia 456, Zona 2\",\r\n  \"telefono\": \"50237326926\",\r\n  \"email\": \"duolingo@edu.com\"\r\n}\r\n",
+							"raw": "{\r\n  \"razonSocial\": \"Empresa ABCD S.A.\",\r\n  \"nombreComercial\": \"ABCD Store\",\r\n  \"direccionEntrega\": \"Avenida Ficticia 476, Zona 2\",\r\n  \"telefono\": \"50237326926\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -320,7 +320,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/cliente/6",
+							"raw": "http://localhost:3000/api/v1/cliente/9",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -330,7 +330,7 @@
 								"api",
 								"v1",
 								"cliente",
-								"6"
+								"9"
 							]
 						}
 					},
