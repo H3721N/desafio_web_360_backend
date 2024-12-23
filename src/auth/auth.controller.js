@@ -40,7 +40,6 @@ const loginCtrl = async (req, res) => {
 
         return res.status(200).json({
             message: 'inicio de sesión exitoso',
-            data: user,
             token: tokenSession,
         });
 
