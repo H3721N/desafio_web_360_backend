@@ -1,6 +1,7 @@
 const Orden = require ('./orden.model')
 const OrdenDetalle = require ('../ordenDetalles/ordenDetalle.model')
 const Estado = require ('../estado/estado.model')
+const Cliente = require ('../clientes/cliente.model')
 
 const postOrden = async (req, res) => {
     try {
@@ -8,6 +9,15 @@ const postOrden = async (req, res) => {
         console.log('La orden es: ', dataOrden);
         const ordenDetalle = dataOrden.ordenDetalle;
         console.log('ordenDetalle',dataOrden.ordenDetalle)
+
+        const cliente = await Cliente.findOne({ where: { email: dataOrden.email } });
+        if (!cliente) {
+            return res.status(400).json({
+                message: 'El email no pertenece a ningun cliente registrad'
+            });
+        }
+
+
         const createOrden = await Orden.create({
             id: dataOrden.id,
             idUsuario: dataOrden.idUsuario,
