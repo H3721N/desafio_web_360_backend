@@ -9,6 +9,7 @@ const categoriaRouter = require('../categoriaProductos/categoriaProducto.routes'
 const productoRouter = require('../producto/producto.routes');
 const ordenDetalleRouter = require('../ordenDetalles/ordenDetalle.router');
 const authRouter = require("../auth/auth.route");
+const appRouter = require("../orden/orden.route")
 
 const app = express();
 
@@ -28,5 +29,6 @@ app.use('/api/v1', categoriaRouter);
 app.use('/api/v1', productoRouter);
 app.use('/api/v1', ordenDetalleRouter);
 app.use('/api/v1', authRouter);
+app.use('/api/v1', appRouter);
 
 module.exports = app;
