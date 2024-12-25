@@ -10,6 +10,11 @@ const postOrden = async (req, res) => {
         const ordenDetalle = dataOrden.ordenDetalle;
         console.log('ordenDetalle',dataOrden.ordenDetalle)
 
+        const totalOrden = ordenDetalle.reduce((total, detalle) => {
+            const subTotal = detalle.cantidad * detalle.precio;
+            return total + subTotal;
+        }, 0);
+
         const cliente = await Cliente.findOne({ where: { email: dataOrden.email } });
         if (!cliente) {
             return res.status(400).json({
@@ -28,18 +33,19 @@ const postOrden = async (req, res) => {
             telefono: dataOrden.telefono,
             email: dataOrden.email,
             fechaEntrega: dataOrden.fechaEntrega,
-            total: dataOrden.total,
+            total: totalOrden,
         });
-
         if (ordenDetalle.length > 0) {
             for (const detalle of ordenDetalle) {
+                const subTotal = detalle.cantidad * detalle.precio;
                 await OrdenDetalle.create({
                     idOrden: createOrden.id,
                     idProducto: detalle.idProducto,
                     cantidad: detalle.cantidad,
                     precio: detalle.precio,
-                    subtotal: detalle.subtotal,
+                    subtotal: subTotal
                 });
+                console.log('subTotal', subTotal);
             }
         }
 
@@ -78,7 +84,7 @@ const updateOrden = async (req, res) => {
 
         res.status(200).json({
             message: 'Orden actualizada con exito',
-            data: getOrden, getEstado
+            data: updateOrden, getOrden, getEstado
         });
     }catch(error){
         res.status(500).json({
