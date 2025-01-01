@@ -43,6 +43,34 @@ const postUsuario = async (req, res) => {
     }
 }
 
+const getUsuarioById = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const usuario = await Usuario.findOne({
+            where: { id: id },
+        });
+
+        if (!usuario) {
+            return res.status(404).json({
+                message: 'No se encontró el usuario con el id proporcionado',
+            });
+        }
+
+        res.status(200).json({
+            message: 'Usuario encontrado con éxito',
+            data: usuario,
+        });
+    } catch (error) {
+        console.error('Error al obtener el usuario:', error);
+        res.status(500).json({
+            message: 'Error al obtener el usuario',
+            error: error.message,
+        });
+    }
+};
+
+
 const updateUsuario = async (req, res) => {
     try {
     const id = req.params.id;
@@ -90,7 +118,9 @@ const updateUsuario = async (req, res) => {
     }
 }
 
+
 module.exports = {
     postUsuario,
-    updateUsuario
-}
+    updateUsuario,
+    getUsuarioById
+};

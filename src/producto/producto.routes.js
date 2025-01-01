@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { postProducto, updateProducto } = require('./producto.controller');
+const { postProducto, updateProducto, getProducto } = require('./producto.controller');
 const {checkToken} = require("../middleware/checkToken");
 const {validateProducto} = require("../validators/validators");
 const {checkRoleAuth} = require("../middleware/checkRoleAuth");
@@ -15,5 +15,10 @@ router.put('/producto/:id',
     validateProducto,
     checkRoleAuth(['Admin']),
     updateProducto);
+
+router.get('/producto',
+    checkToken,
+    getProducto
+);
 
 module.exports = router;

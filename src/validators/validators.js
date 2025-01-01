@@ -94,7 +94,7 @@ const validateOrden = [
     check('idEstado').exists().not().isEmpty().isInt(),
     check('fecha').exists().not().isEmpty().isDate(),
     check('nombre').exists().not().isEmpty().isString().isLength({ max: 75 }).withMessage('El nombre no puede tener más de 75 caracteres'),
-    check('direccion').exists().not().isEmpty().isString().isLength({ max: 545 }).withMessage('La direccion no puede tener más de 545 caracteres'),
+    check('direccion').optional().exists().not().isEmpty().isString().isLength({ max: 545 }).withMessage('La direccion no puede tener más de 545 caracteres'),
     check('telefono').exists().not().isEmpty().isString().isLength({ max: 45 }).withMessage('El telefono no puede tener más de 45 caracteres'),
     check('email').exists().not().isEmpty().isEmail().isLength({ max: 75 }).withMessage('El email no puede tener más de 75 caracteres'),
     check('fechaEntrega').exists().not().isEmpty().isDate(),

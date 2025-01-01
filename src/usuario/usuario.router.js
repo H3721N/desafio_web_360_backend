@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { postUsuario,
-        updateUsuario } = require('./usuario.controller');
+        updateUsuario, getUsuarioById
+} = require('./usuario.controller');
 const {checkToken} = require("../middleware/checkToken");
 const {validateUsuarios} = require("../validators/validators");
 const {checkRoleAuth} = require("../middleware/checkRoleAuth");
@@ -13,5 +14,8 @@ router.put('/usuario/:id',
     checkToken,
     validateUsuarios,
     updateUsuario);
+
+router.get('/usuario/:id',
+    getUsuarioById);
 
 module.exports = router;
