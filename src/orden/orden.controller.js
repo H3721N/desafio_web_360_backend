@@ -135,7 +135,123 @@ const updateOrden = async (req, res) => {
     }
 }
 
+const getOrden = async (req, res) => {
+    try {
+        console.log('User:', req.user.rol, ' ID:', req.user.id);
+        if (!req.user || !req.user.rol || !req.user.id) {
+            return res.status(400).json({
+                message: 'User information is missing or incomplete'
+            });
+        }
+
+        const userRole = req.user.rol;
+        const userId = req.user.id;
+
+        console.log('User Role:', userRole);
+        console.log('User ID:', userId);
+
+        let ordenes;
+
+        if (userRole === 'Admin' || userRole === 'Administrador') {
+            ordenes = await Orden.findAll({
+                include: [{
+                    model: OrdenDetalle,
+                    as: 'ordenDetalles',
+                }]
+            });
+        } else {
+            ordenes = await Orden.findAll({
+                where: { idUsuario: userId },
+                include: [{
+                    model: OrdenDetalle,
+                    as: 'ordenDetalles',
+                }]
+            });
+        }
+
+        console.log('Ordenes:', ordenes);
+
+        res.status(200).json({
+            message: 'Ordenes obtenidas con éxito',
+            data: ordenes
+        });
+    } catch (error) {
+        console.error('Error al obtener las ordenes:', error);
+        res.status(500).json({
+            message: 'Error al obtener las ordenes',
+            error: error.message
+        });
+    }
+};
+
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { login as loginRequest } from "../../services/authService.jsx";
+import toast from 'react-hot-toast';
+
+export const useLogin = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+
+    const decodeJWT = (token) => {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+    };
+
+    const login = async (email, password) => {
+        if (!email || !password) {
+            toast.error('Email and password are required');
+            return;
+        }
+
+        setIsLoading(true);
+
+        const response = await loginRequest({
+            email,
+            password
+        });
+
+        console.log('Response:', response);
+
+        setIsLoading(false);
+
+        if (response.error) {
+            toast.error('Error al iniciar sesión');
+            return;
+        }
+
+        const token = response.data.token;
+
+        if (!token) {
+            toast.error('Token is undefined');
+            return;
+        }
+
+        console.log('Token:', token);
+        localStorage.setItem('token', token);
+
+        const decodedToken = decodeJWT(token);
+        console.log('Decoded Token:', decodedToken);
+
+        const userRole = decodedToken.userRol;
+        console.log('User Role:', userRole);
+
+        if (userRole === 'Admin') {
+            navigate('/orden', { state: { email, password } });
+        } else {
+            navigate('/home', { state: { email, password } });
+        }
+    };
+
+    return { login, isLoading };
+};
+
 module.exports = {
     postOrden,
-    updateOrden
+    updateOrden,
+    getOrden
 }
