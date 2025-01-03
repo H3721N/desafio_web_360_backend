@@ -37,9 +37,7 @@ const postClienteUsuario = async (req, res) => {
     const transaction = await Cliente.sequelize.transaction();
     try {
         const dataCliente = req.body;
-        //const transaction = await Cliente.sequelize.transaction();
 
-        // validar que el correo no exista
         const existeCliente = await Cliente.findOne({ where: { email: dataCliente.email }, transaction });
         if (existeCliente) {
             await transaction.rollback();
@@ -48,7 +46,6 @@ const postClienteUsuario = async (req, res) => {
             });
         }
 
-        // hash de la contraseña
         const hashedPassword = await bcrypt.hash(dataCliente.password, 10);
 
         // crear cliente
@@ -63,7 +60,7 @@ const postClienteUsuario = async (req, res) => {
         // crear usuario vinculado al cliente
         const createUsuario = await Usuario.create(
             {
-                idRol: 1,
+                idRol: 2,
                 idEstado: 1,
                 email: dataCliente.email,
                 nombre: dataCliente.nombre,
