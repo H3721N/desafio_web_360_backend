@@ -18,13 +18,13 @@ router.get('/estado/:id', getEstadoById);
 router.post('/estado',
     checkToken,
     validateEstados,
-    checkRoleAuth(['Admin']),
+    checkRoleAuth(['operador']),
     createEstado);
 
 router.put('/estado/:id',
     checkToken,
     validateEstados,
-    checkRoleAuth(['Admin']),
+    checkRoleAuth(['operador']),
     updateEstado);
 
 router.delete('/estado/:id', deleteEstado);

@@ -23,6 +23,14 @@ Estado.init({
     timestamps: false,
 });
 
+Estado.associate = function(models) {
+    Estado.hasMany(models.Usuario, { foreignKey: 'idEstado', as: 'nombre' });
+};
+
+Estado.associate = function(models) {
+    Estado.hasMany(models.Orden, { foreignKey: 'idOrden', as: 'nombre' });
+};
+
 module.exports = Estado;
 
 
