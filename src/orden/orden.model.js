@@ -3,6 +3,7 @@ const {Model, Sequelize, DataTypes} = require('sequelize');
 const sequelize = require('../db/mysql');
 
 const OrdenDetalle = require('../ordenDetalles/ordenDetalle.model');
+const Estado = require("../estado/estado.model");
 
 
 class Orden extends Model{
@@ -80,6 +81,6 @@ Orden.init({
 
 Orden.hasMany(OrdenDetalle, { as: 'ordenDetalles', foreignKey: 'idOrden' });
 OrdenDetalle.belongsTo(Orden, { foreignKey: 'idOrden' });
-
+Orden.belongsTo(Estado, { foreignKey: 'idEstado', as: 'Estado' });
 
 module.exports = Orden;

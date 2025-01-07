@@ -4,6 +4,8 @@ const Producto = require ('../producto/producto.model')
 const Estado = require ('../estado/estado.model')
 const Cliente = require ('../clientes/cliente.model')
 const sequelize = require('../db/mysql');
+const Sequelize = require('sequelize');
+
 
 const postOrden = async (req, res) => {
     const transaction = await sequelize.transaction();
@@ -11,7 +13,7 @@ const postOrden = async (req, res) => {
         const dataOrden = req.body;
         console.log('La orden es: ', dataOrden);
         const ordenDetalle = dataOrden.ordenDetalle;
-        console.log('ordenDetalle',dataOrden.ordenDetalle);
+        console.log('ordenDetalle', dataOrden.ordenDetalle);
 
         for (const detalle of ordenDetalle) {
             const getProducto = await Producto.findOne({
@@ -19,9 +21,9 @@ const postOrden = async (req, res) => {
                 transaction
             });
 
-            if(detalle.cantidad > getProducto.stock){
+            if (detalle.cantidad > getProducto.stock) {
                 await transaction.rollback();
-                res.status(400).json({
+                return res.status(400).json({
                     message: 'No hay suficiente stock'
                 });
             }
@@ -40,9 +42,15 @@ const postOrden = async (req, res) => {
             });
         }
 
+        const estado = await Estado.findByPk(dataOrden.idEstado);
+        if (!estado) {
+            await transaction.rollback();
+            return res.status(400).json({
+                message: 'Estado no encontrado'
+            });
+        }
 
         const createOrden = await Orden.create({
-            id: dataOrden.id,
             idUsuario: dataOrden.idUsuario,
             idEstado: dataOrden.idEstado,
             fecha: dataOrden.fecha,
@@ -53,6 +61,7 @@ const postOrden = async (req, res) => {
             fechaEntrega: dataOrden.fechaEntrega,
             total: totalOrden,
         }, { transaction });
+
         if (ordenDetalle.length > 0) {
             for (const detalle of ordenDetalle) {
                 const subTotal = detalle.cantidad * detalle.precio;
@@ -66,11 +75,11 @@ const postOrden = async (req, res) => {
                 console.log('subTotal', subTotal);
 
                 const getProducto = await Producto.findOne({
-                    where: {id: detalle.idProducto},
+                    where: { id: detalle.idProducto },
                     transaction
                 });
 
-                const updateProducto = await Producto.update({
+                await Producto.update({
                     stock: getProducto.stock - detalle.cantidad,
                 }, {
                     where: { id: detalle.idProducto },
@@ -83,22 +92,22 @@ const postOrden = async (req, res) => {
 
         res.status(200).json({
             message: 'Orden creada con exito',
-            data: createOrden, ordenDetalle
+            data: { createOrden, ordenDetalle }
         });
 
-    }catch(error){
+    } catch (error) {
         console.log('Error', error);
         await transaction.rollback();
         res.status(500).json({
-            message: error,
+            message: 'Error interno del servidor',
             error: error.message,
-
-        })
+        });
     }
-}
+};
+
 
 const updateOrden = async (req, res) => {
-    const transaction = await Sequelize.transaction();
+    const transaction = await sequelize.transaction();
     try {
         const dataOrden = req.body;
         const id = req.params.id;
@@ -140,7 +149,7 @@ const getOrden = async (req, res) => {
         console.log('User:', req.user.rol, ' ID:', req.user.id);
         if (!req.user || !req.user.rol || !req.user.id) {
             return res.status(400).json({
-                message: 'User information is missing or incomplete'
+                message: 'user information is missing or incomplete'
             });
         }
 
@@ -150,108 +159,226 @@ const getOrden = async (req, res) => {
         console.log('User Role:', userRole);
         console.log('User ID:', userId);
 
+        const page = parseInt(req.query.page) || 1;
+        const pageSize = parseInt(req.query.size) || 10;
+        const offset = (page - 1) * pageSize;
+        const limit = pageSize;
+
         let ordenes;
 
-        if (userRole === 'Admin' || userRole === 'Administrador') {
+        if (userRole === 'operador' || userRole === 'Administrador') {
             ordenes = await Orden.findAll({
-                include: [{
-                    model: OrdenDetalle,
-                    as: 'ordenDetalles',
-                }]
+                include: [
+                    {
+                        model: OrdenDetalle,
+                        as: 'ordenDetalles',
+                    },
+                    {
+                        model: Estado,
+                        as: 'Estado',
+                    }
+                ],
+                limit: limit,
+                offset: offset
             });
         } else {
             ordenes = await Orden.findAll({
                 where: { idUsuario: userId },
-                include: [{
-                    model: OrdenDetalle,
-                    as: 'ordenDetalles',
-                }]
+                include: [
+                    {
+                        model: OrdenDetalle,
+                        as: 'ordenDetalles',
+                    },
+                    {
+                        model: Estado,
+                        as: 'Estado',
+                    }
+                ],
+                limit: limit,
+                offset: offset
             });
         }
 
         console.log('Ordenes:', ordenes);
 
+        const totalOrdenes = await Orden.count();
+
         res.status(200).json({
-            message: 'Ordenes obtenidas con éxito',
-            data: ordenes
+            message: 'ordenes obtenidas con éxito',
+            data: ordenes,
+            pagintation: {
+                totalOrden: totalOrdenes,
+                page: page,
+                pageSize: pageSize,
+                totalPage: Math.ceil(totalOrdenes / pageSize),
+            }
         });
     } catch (error) {
-        console.error('Error al obtener las ordenes:', error);
+        console.error('error al obtener las ordenes:', error);
         res.status(500).json({
-            message: 'Error al obtener las ordenes',
+            message: 'error al obtener las ordenes',
             error: error.message
         });
     }
 };
 
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { login as loginRequest } from "../../services/authService.jsx";
-import toast from 'react-hot-toast';
-
-export const useLogin = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
-
-    const decodeJWT = (token) => {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-        return JSON.parse(jsonPayload);
-    };
-
-    const login = async (email, password) => {
-        if (!email || !password) {
-            toast.error('Email and password are required');
-            return;
+const getOrdenDetalleByOrdenId = async (req, res) => {
+    try {
+        const idOrden = req.params.id;
+        if (!idOrden) {
+            return res.status(400).json({
+                message: 'El id de la orden es requerido',
+            });
         }
 
-        setIsLoading(true);
+        const page = parseInt(req.query.page) || 1;
+        const pageSize = parseInt(req.query.size) || 10;
+        const offset = (page - 1) * pageSize;
+        const limit = pageSize;
 
-        const response = await loginRequest({
-            email,
-            password
+        const orden = await Orden.findOne({
+            where: { id: idOrden },
+
+            include: [{
+                model: OrdenDetalle,
+                as: 'ordenDetalles',
+                include: [{
+                    model: Producto,
+                    as: 'Producto',
+                    attributes: ['id', 'nombre']
+                }]
+            }],
+            offset: offset,
+            limit: limit
         });
 
-        console.log('Response:', response);
-
-        setIsLoading(false);
-
-        if (response.error) {
-            toast.error('Error al iniciar sesión');
-            return;
+        if (!orden) {
+            return res.status(404).json({
+                message: 'No se encontró la orden para el id proporcionado',
+            });
         }
 
-        const token = response.data.token;
+        const totalOrdenDetalles = await OrdenDetalle.count({ where: { idOrden: idOrden } });
 
-        if (!token) {
-            toast.error('Token is undefined');
-            return;
-        }
-
-        console.log('Token:', token);
-        localStorage.setItem('token', token);
-
-        const decodedToken = decodeJWT(token);
-        console.log('Decoded Token:', decodedToken);
-
-        const userRole = decodedToken.userRol;
-        console.log('User Role:', userRole);
-
-        if (userRole === 'Admin') {
-            navigate('/orden', { state: { email, password } });
-        } else {
-            navigate('/home', { state: { email, password } });
-        }
-    };
-
-    return { login, isLoading };
+        res.status(200).json({
+            message: 'Detalles de orden obtenidos con éxito',
+            data: orden,
+            orden:  orden.ordenDetalles,
+            pagination: {
+                totalOrdenDetalles: totalOrdenDetalles,
+                page: page,
+                pageSize: pageSize,
+                totalPage: Math.ceil(totalOrdenDetalles / pageSize),
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al obtener los detalles de la orden',
+            error: error.message,
+        });
+    }
 };
+
+const cancelarOrden = async (req, res) => {
+    const transaction = await sequelize.transaction();
+    try {
+        const idOrden = req.params.id;
+        if (!idOrden) {
+            return res.status(400).json({
+                message: 'El id de la orden es requerido',
+            });
+        }
+
+        const orden = await Orden.findOne({
+            where: { id: idOrden },
+            include: [{
+                model: OrdenDetalle,
+                as: 'ordenDetalles',
+                include: [{
+                    model: Producto,
+                    as: 'Producto'
+                }]
+            }],
+            transaction
+        });
+
+        if (!orden) {
+            await transaction.rollback();
+            return res.status(404).json({
+                message: 'No se encontró la orden para el id proporcionado',
+            });
+        }
+
+        await Orden.update({
+            idEstado: 3
+        }, {
+            where: { id: idOrden },
+            transaction
+        });
+
+        for (const detalle of orden.ordenDetalles) {
+            const producto = await Producto.findOne({
+                where: { id: detalle.idProducto },
+                transaction
+            });
+
+            await Producto.update({
+                stock: producto.stock + detalle.cantidad,
+            }, {
+                where: { id: detalle.idProducto },
+                transaction
+            });
+        }
+
+        await transaction.commit();
+
+        res.status(200).json({
+            message: 'Orden cancelada con éxito',
+            data: orden
+        });
+    } catch (error) {
+        await transaction.rollback();
+        res.status(500).json({
+            message: 'Error al cancelar la orden',
+            error: error.message,
+        });
+    }
+};
+
+const entregarOrden = async (req, res) => {
+    try {
+        const idOrden = req.params.id;
+        if (!idOrden) {
+            return res.status(400).json({
+                message: 'El id de la orden es requerido',
+            });
+        }
+        const updateOrden = await Orden.update({
+            idEstado: 4,
+            fechaEntrega: new Date().toISOString().split('T')[0]
+        }, {
+            where: { id: idOrden }
+        });
+        const orden = await Orden.findOne({
+            where: { id: idOrden }
+        });
+        res.status(200).json({
+            message: 'Orden entregada con éxito',
+            data: orden
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error al entregar la orden',
+            error: error.message,
+        });
+    }
+}
 
 module.exports = {
     postOrden,
     updateOrden,
-    getOrden
+    getOrden,
+    getOrdenDetalleByOrdenId,
+    cancelarOrden,
+    entregarOrden
 }

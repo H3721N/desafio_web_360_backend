@@ -1,6 +1,6 @@
 const router = require ('express').Router();
 
-const { postOrden, updateOrden, getOrden} = require('./orden.controller');
+const { postOrden, updateOrden, getOrden, getOrdenDetalleByOrdenId, cancelarOrden, entregarOrden} = require('./orden.controller');
 const {checkToken} = require("../middleware/checkToken");
 const {validateOrden} = require("../validators/validators");
 const {checkRoleAuth} = require("../middleware/checkRoleAuth");
@@ -17,7 +17,22 @@ router.put('/orden/:id',
 
 router.get('/orden',
     checkToken,
-    checkRoleAuth(['Admin','Usuario']),
+    checkRoleAuth(['operador','cliente']),
     getOrden);
+
+router.get('/orden/:id',
+    checkToken,
+    checkRoleAuth(['operador','cliente']),
+    getOrdenDetalleByOrdenId);
+
+router.put('/orden/cancelar/:id',
+    checkToken,
+    checkRoleAuth(['operador','cliente']),
+    cancelarOrden);
+
+router.put('/orden/entregar/:id',
+    checkToken,
+    checkRoleAuth(['operador','cliente']),
+    entregarOrden);
 
 module.exports = router;
