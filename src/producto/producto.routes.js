@@ -1,5 +1,7 @@
 const router = require('express').Router();
-const { postProducto, updateProducto, getProducto } = require('./producto.controller');
+const { postProducto, updateProducto, getProducto, getProductoByPriceRange
+
+} = require('./producto.controller');
 const {checkToken} = require("../middleware/checkToken");
 const {validateProducto} = require("../validators/validators");
 const {checkRoleAuth} = require("../middleware/checkRoleAuth");
@@ -7,13 +9,13 @@ const {checkRoleAuth} = require("../middleware/checkRoleAuth");
 router.post('/producto',
     checkToken,
     validateProducto,
-    checkRoleAuth(['Admin']),
+    checkRoleAuth(['operador']),
     postProducto);
 
 router.put('/producto/:id',
     checkToken,
     validateProducto,
-    checkRoleAuth(['Admin']),
+    checkRoleAuth(['operador']),
     updateProducto);
 
 router.get('/producto',

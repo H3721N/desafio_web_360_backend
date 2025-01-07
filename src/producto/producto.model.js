@@ -1,16 +1,15 @@
-const {DataTypes, Model} = require('sequelize');
-
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../db/mysql');
 
 class Producto extends Model {}
 
 Producto.init({
-   id: {
-       type: DataTypes.INTEGER,
-       autoIncrement: true,
-       primaryKey: true,
-       field: 'idProductos'
-   },
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        field: 'idProductos'
+    },
     idCategoria: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -73,11 +72,17 @@ Producto.init({
         type: DataTypes.BLOB,
         allowNull: false
     },
-},{
+}, {
     sequelize,
-    modelName: 'producto',
+    modelName: 'Producto',
     tableName: 'Productos',
     timestamps: false
 });
+
+Producto.associate = function(models) {
+    Producto.hasMany(models.OrdenDetalle, { foreignKey: 'idProducto', as: 'ordenDetalles' });
+};
+
+
 
 module.exports = Producto;

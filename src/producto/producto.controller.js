@@ -1,4 +1,6 @@
 const Producto = require('./producto.model');
+const { Op } = require('sequelize');
+
 
 const postProducto = async (req, res) => {
     try {
@@ -77,19 +79,54 @@ const updateProducto = async (req, res) => {
 
 const getProducto = async (req, res) => {
     try {
-        const productos = await Producto.findAll();
+        const page = parseInt(req.query.page) || 1;
+        const pageSize = parseInt(req.query.size) || 10;
+        const offset = (page - 1) * pageSize;
+        const limit = pageSize;
+
+        const whereCondition = {};
+
+        const minPrice = parseFloat(req.query.minPrice);
+        const maxPrice = parseFloat(req.query.maxPrice) || Number.MAX_VALUE;
+        console.log(maxPrice)
+        if (minPrice >= 0 && maxPrice < Number.MAX_VALUE) {
+            whereCondition.precios = {
+                [Op.between]: [minPrice, maxPrice]
+            };
+        }
+
+        const searchFilter = req.query.searchFilter;
+        if (searchFilter) {
+            whereCondition.nombre = {
+                [Op.like]: `%${searchFilter}%`
+            };
+        }
+
+
+        const { count: total, rows: productos } = await Producto.findAndCountAll({
+            offset: offset,
+            limit: limit,
+            where: whereCondition,
+        });
+
         const productosConImagen = productos.map(producto => {
             return {
                 ...producto.toJSON(),
                 foto: producto.foto ? Buffer.from(producto.foto).toString('base64') : null
             };
         });
+
         res.status(200).json({
             success: true,
             data: productosConImagen,
+            pagination: {
+                totalItems: total,
+                totalPages: Math.ceil(total / pageSize),
+                currentPage: page,
+                pageSize: pageSize
+            }
         });
     } catch (error) {
-
         console.error(error);
         res.status(500).json({
             success: false,
@@ -98,8 +135,36 @@ const getProducto = async (req, res) => {
     }
 };
 
+const getProductoByPriceRange = async (req, res) => {
+    try {
+
+
+        const productos = await Producto.findAll({
+
+        });
+
+        const productosConImagen = productos.map(producto => ({
+            ...producto.toJSON(),
+            foto: producto.foto ? Buffer.from(producto.foto).toString('base64') : null
+        }));
+
+        res.status(200).json({
+            success: true,
+            data: productosConImagen
+        });
+    } catch (error) {
+        console.error('Error al obtener los productos por rango de precio:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Hubo un error al recuperar los productos por rango de precio.',
+            error: error.message
+        });
+    }
+};
+
 module.exports = {
     postProducto,
     updateProducto,
-    getProducto
+    getProducto,
+    getProductoByPriceRange
 };

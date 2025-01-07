@@ -15,13 +15,13 @@ router.get('/rol/:id', getRolById);
 router.post('/rol',
     checkToken,
     validateRol,
-    checkRoleAuth(['Admin']),
+    checkRoleAuth(['operador']),
     createRol);
 
 router.put('/rol/:id',
     checkToken,
     validateRol,
-    checkRoleAuth(['Admin']),
+    checkRoleAuth(['operador']),
     updateRol);
 
 

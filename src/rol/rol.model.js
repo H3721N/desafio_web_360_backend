@@ -24,6 +24,10 @@ Rol.init({
     timestamps: false,
 });
 
+Rol.associate = function(models) {
+    Rol.hasMany(models.Usuario, { foreignKey: 'idRol', as: 'nombre' });
+};
+
 module.exports = Rol;
 
 async function testConnection() {
