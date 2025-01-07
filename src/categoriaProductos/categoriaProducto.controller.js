@@ -53,7 +53,23 @@ const updateCategoriaProducto = async (req, res) =>{
     }
 }
 
+const getCategoriaProducto = async (req, res) => {
+    try {
+        const categoriaProductos = await CategoriaProductos.findAll();
+        res.status(200).json({
+            message: 'Lista de categorias',
+            data: categoriaProductos,
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al obtener las categorias',
+            error: error.message,
+        });
+    }
+}
+
 module.exports = {
     postCategoriaProducto,
-    updateCategoriaProducto
+    updateCategoriaProducto,
+    getCategoriaProducto
 }

@@ -50,4 +50,8 @@ CategoriaProducto.init({
     timestamps: false
 });
 
+CategoriaProducto.associate = function(models) {
+    CategoriaProducto.hasMany(models.Producto, { foreignKey: 'idCategoria', as: 'Producto' });
+};
+
 module.exports = CategoriaProducto;
