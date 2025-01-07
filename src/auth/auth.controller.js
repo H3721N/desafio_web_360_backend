@@ -14,6 +14,10 @@ const loginCtrl = async (req, res) => {
         ////
         const rolUsuario = user.idRol;
 
+        if (user.idEstado !== 5) {
+            return res.status(403).json({ error: 'Usuario no autorizado' });
+        }
+
         console.log('rolUsuario = ', rolUsuario);
 
         const userRole = await Rol.findOne({
