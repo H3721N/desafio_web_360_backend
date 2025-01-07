@@ -7,13 +7,13 @@ const {checkToken} = require("../middleware/checkToken");
 router.post('/ordenDetalle',
     checkToken,
     validateOrdendetalles,
-    checkRoleAuth(['Admin']),
+    checkRoleAuth(['operador']),
     postOrdenDetalle);
 
 router.put('/ordenDetalle/:id',
     checkToken,
     validateOrdendetalles,
-    checkRoleAuth(['Admin']),
+    checkRoleAuth(['operador']),
     putOrdenDetalle);
 
 module.exports = router;

@@ -1,10 +1,10 @@
-const {Sequelize, DataTypes, Model} = require('sequelize');
-
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../db/mysql');
+const Producto = require('../producto/producto.model');
 
-class ordenDetalles extends Model {}
+class OrdenDetalle extends Model {}
 
-ordenDetalles.init({
+OrdenDetalle.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -43,9 +43,11 @@ ordenDetalles.init({
     },
 }, {
     sequelize,
-    modelName: 'ordenDetalles',
+    modelName: 'OrdenDetalle',
     tableName: 'OrdenDetalles',
     timestamps: false
 });
 
-module.exports = ordenDetalles;
+OrdenDetalle.belongsTo(Producto, { foreignKey: 'idProducto', as: 'Producto' });
+
+module.exports = OrdenDetalle;
