@@ -1,6 +1,9 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 
 const sequelize = require('../db/mysql');
+const Rol = require('../rol/rol.model');
+const Cliente = require('../clientes/cliente.model');
+const Estado = require('../estado/estado.model');
 
 class Usuario extends Model {}
 
@@ -53,7 +56,7 @@ Usuario.init({
     },
     fechaNacimiento: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
         field: 'fecha_nacimiento'
     },
     creacionCuenta: {
@@ -64,23 +67,25 @@ Usuario.init({
     },
     idCliente: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: 'Clientes',
             key: 'idcliente'
-
         },
         field: 'Clientes_idClientes',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     }
-
-
-},{
+}, {
     sequelize,
     modelName: 'usuario',
     tableName: 'Usuarios',
     timestamps: false,
 });
+
+Usuario.belongsTo(Rol, { foreignKey: 'idRol', as: 'Rol' });
+Usuario.belongsTo(Cliente, { foreignKey: 'idCliente', as: 'Cliente' });
+Usuario.belongsTo(Estado, { foreignKey: 'idEstado', as: 'Estado' });
+
 
 module.exports = Usuario;
