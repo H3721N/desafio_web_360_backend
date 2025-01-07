@@ -68,8 +68,39 @@ const getCategoriaProducto = async (req, res) => {
     }
 }
 
+const getCategoriaProductoWithPage = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const pageSize = parseInt(req.query.size) || 10;
+        const offset = (page - 1) * pageSize;
+        const limit = pageSize;
+
+        const { count: total, rows: categorias} = await CategoriaProductos.findAndCountAll({
+            offset: offset,
+            limit: limit,
+        });
+
+        res.status(200).json({
+            success: true,
+            data: categorias,
+            pagination: {
+                totalItems: total,
+                totalPages: Math.ceil(total / pageSize),
+                currentPage: page,
+                pageSize: pageSize
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al obtener las categorias',
+            error: error.message,
+        });
+    }
+}
+
 module.exports = {
     postCategoriaProducto,
     updateCategoriaProducto,
-    getCategoriaProducto
+    getCategoriaProducto,
+    getCategoriaProductoWithPage,
 }
