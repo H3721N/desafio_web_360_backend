@@ -8,7 +8,7 @@ Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo `LICENS
 
 ## Notas
 
-Es necesario que los usuarios tengan el rol \`Admin\` para realizar las acciones de creación y edicion de registros
+Es necesario que los usuarios tengan el rol \`operador\` para realizar las acciones de creación y edicion de registros
 para la mayoria de entidades.
 
 ## Descripción
