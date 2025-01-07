@@ -48,7 +48,6 @@ const postClienteUsuario = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(dataCliente.password, 10);
 
-        // crear cliente
         const createCliente = await Cliente.create({
             razonSocial: dataCliente.razonSocial,
             nombreComercial: dataCliente.nombreComercial,
@@ -57,7 +56,6 @@ const postClienteUsuario = async (req, res) => {
             email: dataCliente.email,
         }, { transaction });
 
-        // crear usuario vinculado al cliente
         const createUsuario = await Usuario.create(
             {
                 idRol: 2,
@@ -72,7 +70,6 @@ const postClienteUsuario = async (req, res) => {
             { transaction }
         );
 
-        // confirmar transacción
         await transaction.commit();
 
         res.status(200).json({

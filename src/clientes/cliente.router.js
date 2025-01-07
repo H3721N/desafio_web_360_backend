@@ -9,13 +9,13 @@ const {checkRoleAuth} = require("../middleware/checkRoleAuth");
 router.post('/cliente',
     checkToken,
     validateClientes,
-    checkRoleAuth(['Admin']),
+    checkRoleAuth(['operador']),
     postCliente);
 
 router.put('/cliente/:id',
     checkToken,
     validateClientes,
-    checkRoleAuth(['Admin']),
+    checkRoleAuth(['operador']),
     updateCliente);
 
 router.post('/clienteUsuario',
