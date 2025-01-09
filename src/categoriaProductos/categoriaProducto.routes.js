@@ -19,7 +19,7 @@ router.put('/categoriaProducto/:id',
     updateCategoriaProducto
 );
 
-router.get('/categoriaProducto', checkToken, checkRoleAuth(['operador']), getCategoriaProducto);
+router.get('/categoriaProducto', checkToken, getCategoriaProducto);
 
 router.get('/categoriaProductoPage', checkToken, checkRoleAuth(['operador']), getCategoriaProductoWithPage);
 

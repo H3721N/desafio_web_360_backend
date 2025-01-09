@@ -9,6 +9,7 @@ const postUsuario = async (req, res) => {
     const transaction = await Usuario.sequelize.transaction();
     try {
         const dateUsuario = req.body;
+        console.log(dateUsuario.email);
 
         const existeUsuario = await Usuario.findOne({ where: { email: dateUsuario.email }, transaction });
         if (existeUsuario) {

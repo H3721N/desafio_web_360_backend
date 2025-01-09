@@ -59,7 +59,7 @@ const postClienteUsuario = async (req, res) => {
         const createUsuario = await Usuario.create(
             {
                 idRol: 2,
-                idEstado: 1,
+                idEstado: 5,
                 email: dataCliente.email,
                 nombre: dataCliente.nombre,
                 password: hashedPassword,

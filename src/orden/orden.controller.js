@@ -309,6 +309,14 @@ const cancelarOrden = async (req, res) => {
             });
         }
 
+
+        if(orden.idEstado === 3 || orden.idEstado === 4){
+            await transaction.rollback();
+            return res.status(400).json({
+                message: 'La orden ya ha sido cancelada o entregada'
+            });
+        }
+
         await Orden.update({
             idEstado: 3
         }, {
@@ -353,15 +361,22 @@ const entregarOrden = async (req, res) => {
                 message: 'El id de la orden es requerido',
             });
         }
+        const orden = await Orden.findOne({
+            where: { id: idOrden }
+        });
+        if(orden.idEstado === 3 || orden.idEstado === 4){
+            await transaction.rollback();
+            return res.status(400).json({
+                message: 'La orden ya ha sido cancelada o entregada'
+            });
+        }
         const updateOrden = await Orden.update({
             idEstado: 4,
             fechaEntrega: new Date().toISOString().split('T')[0]
         }, {
             where: { id: idOrden }
         });
-        const orden = await Orden.findOne({
-            where: { id: idOrden }
-        });
+
         res.status(200).json({
             message: 'Orden entregada con éxito',
             data: orden
